@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define NOT_FIND 4
 #define NUM_ERROR 3
 #define LIST_EMPTY 2
 #define MALLOC_ERR 1
@@ -18,12 +19,12 @@ int ShowList(str_List *list);  //打印链表
 int GetElem(int num, ElemType *elem,
             str_List *list); //查找链表第num个元素,值给elem
 int LocateElem(int num, str_List *list,
-               int result); //在链表中查询数据,result返回数据所在位置,
+               int *result); //在链表中查询数据,result返回数据所在位置,
 int ListInsert(int num, ElemType elem,
                str_List *liet); //在链表的num位置插入数据elem
 int ListDelete(int num, ElemType *elem,
                str_List *list); //在链表中删除第num元素,并且返回所删除的值
-int ListLength(str_List *list, int sum); //返回链表元素个数
+int ListLength(str_List *list, int *sum); //返回链表元素个数
 /**********声明结束*******/
 int main(int argc, char const *argv[]) {
   str_List *list;
@@ -33,13 +34,18 @@ int main(int argc, char const *argv[]) {
   e = &d;
   str_List **delivery;
   delivery = &list;
-  InitList(delivery, 3);
-  ShowList(list);
-  printf("\n");
-  ListInsert(2, 100, list);
-  GetElem(3, e, list);
-  printf("%d查找\n", *e);
-  ShowList(list);
+  // InitList(delivery, 4);
+  // ListLength(list, e);
+  // ListDelete(3, e, list);
+  // ShowList(list);
+  // LocateElem(20, list, e);
+  // GetElem(2, e, list);
+  // printf("%d", *e);
+  // printf("\n");
+  // ListInsert(2, 100, list);
+  // GetElem(3, e, list);
+  // printf("%d查找\n", *e);
+  // ShowList(list);
   return 0;
 }
 int ShowList(str_List *head) {
@@ -117,5 +123,69 @@ int ListInsert(int num, ElemType elem, str_List *list) {
   s->data = elem;
   s->next = p->next;
   p->next = s;
+  return FUNC_EXIT_SUCESS;
+}
+int ClearList(str_List *list) {
+  str_List *p, *q;
+  p = list->next;
+  free(list);
+  while (p) {
+    q = p->next;
+    free(p);
+    p = q;
+  }
+  list->next = NULL;
+  return FUNC_EXIT_SUCESS;
+}
+int LocateElem(int num, str_List *list, int *result) {
+  str_List *p;
+  p = list;
+  while (p == NULL) {
+    return LIST_EMPTY;
+  }
+  int i = 1;
+  while (p->data != num && p->next != NULL) {
+    i++;
+    p = p->next;
+  }
+  if (p->next == NULL) {
+    return NOT_FIND;
+  }
+  *result = i;
+  return FUNC_EXIT_SUCESS;
+}
+int ListDelete(int num, ElemType *elem, str_List *list) {
+  str_List *p, *q, *t;
+  int i;
+  p = list;
+  if (p == NULL) {
+    return LIST_EMPTY;
+  }
+  for (i = 1; i < num - 1; i++) {
+    p = p->next;
+  }
+  t = p->next;
+  q = t->next;
+  *elem = t->data;
+  free(t);
+  p->next = q;
+  return FUNC_EXIT_SUCESS;
+}
+int ListLength(str_List *list, int *num) {
+  str_List *p;
+  p = list;
+  if (p == NULL) {
+    return LIST_EMPTY;
+  }
+  if (p->next == NULL) {
+    *num = 1;
+    return FUNC_EXIT_SUCESS;
+  }
+  int i = 1;
+  do {
+    p = p->next;
+    i++;
+  } while (p->next != NULL);
+  *num = i;
   return FUNC_EXIT_SUCESS;
 }
