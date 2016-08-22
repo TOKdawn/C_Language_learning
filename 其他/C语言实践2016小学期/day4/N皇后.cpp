@@ -56,8 +56,8 @@ void Queen(int n){
             if(i==n){
                 print(arr, n);
                 cout<<endl;
-            }else
-            i--;     
+                i--; 
+            }    
             if(i<0){
                 //free;
                 return;
