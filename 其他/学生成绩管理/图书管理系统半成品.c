@@ -38,7 +38,7 @@ void reader_change();
 void reader_del();
 void reader_show();
 void reader_find();
-void broowBook();
+	void broowBook();
 void returnBook();
 void book_input();
 void book_change();
