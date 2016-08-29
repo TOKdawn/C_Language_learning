@@ -37,7 +37,7 @@ void Input(){
     cin>>x.passWord;
     cout<<"请输入用户类型(1.老师 2.学生)"<<endl;
     cin>>x.ad_type;
-    fp = fopen("FILEADRESS", "ab");  
+    fp = fopen(FILRADRESS, "ab");  
     if (fp == NULL) {
         printf("文件打开错误");
         return ;
@@ -50,11 +50,11 @@ int main(int argc, char *argv[]) {
     Admin x;
     FILE *fp;
     int count,filesize,flag;
-    fp=fopen("FILEADRESS","rb");
+    fp=fopen(FILRADRESS,"rb");
     if(fp==NULL){
         cout<<"文件打开失败"<<endl;
     }
-    
+    cout<<"1.输入"<<endl<<"2.显示"<<endl<<"3.结束"<<endl;
     while(cin>>flag){
         cout<<"1.输入"<<endl<<"2.显示"<<endl<<"3.结束"<<endl;
         if(flag==3){

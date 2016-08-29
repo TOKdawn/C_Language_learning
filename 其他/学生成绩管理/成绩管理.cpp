@@ -61,13 +61,14 @@ int admincheak(char *Name, char *Password){
     FILE *fp;
     int filesize, count,i,type = -1;
     Admin tempUser;
-    if((fp = fopen("FILRADRESS", "rb"))==NULL){
+    if((fp = fopen(FILRADRESS, "rb"))==NULL){
         cout<<"文件打开失败"<<endl;
         return -1;
     }
     fseek(fp, 0, SEEK_END);//文件指针置到文件尾
     filesize = ftell(fp);//计算文件大小
     count = filesize /sizeof(Admin);//文件中含结构体的数目
+    rewind(fp);
     for(i=0;i<count;i++){
         fread(&tempUser,sizeof(Admin),1,fp);//取一个结构体
         if (strcmp(tempUser.userName, Name) == 0 && strcmp(tempUser.passWord, Password) == 0) {
