@@ -29,8 +29,7 @@ int ListLength(str_List *list, int *sum); //返回链表元素个数
 int main(int argc, char const *argv[]) {
   str_List *list;
   int *e;
-  int d =
-      10; //用指针传递参数前务必记得为先声明变量并且赋值,否则直接声明的指针指向NULL会出BUG
+  int d =10; //用指针传递参数前务必记得为先声明变量并且赋值,否则直接声明的指针指向NULL会出BUG
   e = &d;
   str_List **delivery;
   delivery = &list;

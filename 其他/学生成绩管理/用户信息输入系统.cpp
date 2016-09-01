@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+//"/Users/dawn/zpy/studentinformation.txt"
 #define FILRADRESS "/Users/dawn/zpy/userinformation.txt"//文件路径
 #define USERNAMELONGER 20//用户名最大长度
 #define PASSWORDLONGER 16//密码最大长度
