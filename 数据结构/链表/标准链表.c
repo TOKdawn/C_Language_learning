@@ -188,3 +188,4 @@ int ListLength(str_List *list, int *num) {
   *num = i;
   return FUNC_EXIT_SUCESS;
 }
+

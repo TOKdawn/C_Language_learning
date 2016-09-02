@@ -16,8 +16,8 @@
 using namespace std;
 /*****结构体*****/
 typedef struct _Student { //学生数据
-  string Student_num;        //学号
-  string Student_name;      //姓名
+  string Student_num;     //学号
+  string Student_name;    //姓名
   double score[MAXNUM];   //成绩
   char Class[10];
   struct _Student *next;
@@ -26,7 +26,7 @@ typedef struct _Admin {          //登录用户
   char userName[USERNAMELONGER]; //用户名
   char passWord[PASSWORDLONGER]; //密码
   int ad_type;                   //用户类型标识
-  
+
 } Admin;
 /**********函数声明*************/
 void Menushow(int TYPE);
@@ -36,7 +36,8 @@ void ScoreSearch(Student *p);
 Student *LondData(void);                           //读取文件
 int InitList(Student **list, int count, FILE *fp); //创建链表
 void Input(void);
-
+void Show(void);
+void QAQ(void);
 int main(int argc, char *argv[]) {
   Admin visitor;
   int TYPE = -1, i;
@@ -93,13 +94,13 @@ void Menushow(int TYPE) {
   int _user, _teacher; //用户对各个系统的使用权限;
   _user = _teacher = 0;
   switch (TYPE) { //读取用户表示并且分配权限
-    case TEACHER:
-      _user = 1;
-      _teacher = 1;
-      break;
-    case STUDENT:
-      _user = 1;
-      _teacher = 0;
+  case TEACHER:
+    _user = 1;
+    _teacher = 1;
+    break;
+  case STUDENT:
+    _user = 1;
+    _teacher = 0;
   }
   cout << "***************************************" << endl;
   cout << "***************1.成绩管理***************" << endl;
@@ -110,20 +111,20 @@ void Menushow(int TYPE) {
     if (x == 3)
       break;
     switch (x) {
-      case 1:
-        if (!_teacher)
-          cout << "权限不足" << endl;
-        else
-          ScoreManage(p);
-        break;
-      case 2:
-        ScoreSearch(p);
-        break;
+    case 1:
+      if (!_teacher)
+        cout << "权限不足" << endl;
+      else
+        ScoreManage(p);
+      break;
+    case 2:
+      ScoreSearch(p);
+      break;
     }
     cout << "*************请输入下一个命令**************" << endl;
   }
 }
-int InitList(Student **_list,int count,FILE *fp) {
+int InitList(Student **_list, int count, FILE *fp) {
   Student *Nextlist;
   Student *Thislist;
   *_list = (Student *)malloc(sizeof(Student));
@@ -141,14 +142,14 @@ int InitList(Student **_list,int count,FILE *fp) {
     Thislist->next = Nextlist;
     Thislist = Nextlist;
   }
-  Thislist->next=NULL;
+  Thislist->next = NULL;
   return 0;
 }
 Student *LondData() {
   Student *list;
   Student **_list;
   _list = &list; //指针传递变量,主函数分配内存空间,子函数使用.
-  
+
   FILE *fp;
   Student x;
   int count, filesize;
@@ -161,15 +162,16 @@ Student *LondData() {
   filesize = ftell(fp);
   count = filesize / sizeof(Student);
   rewind(fp);
-  switch (InitList(_list, count,fp)) { //多可能性函数调用,可以根据返回值具体显示错误原因
-    case 1:
-      cout << "申请内存空间失败,请退出" << endl;
-      break;
-    case 0:
-      cout << "系统加载成功" << endl;
-      break;
-    default:
-      cout << "未知错误,请退出" << endl;
+  switch (InitList(_list, count,
+                   fp)) { //多可能性函数调用,可以根据返回值具体显示错误原因
+  case 1:
+    cout << "申请内存空间失败,请退出" << endl;
+    break;
+  case 0:
+    cout << "系统加载成功" << endl;
+    break;
+  default:
+    cout << "未知错误,请退出" << endl;
   }
   fclose(fp);
   return list;
@@ -181,7 +183,7 @@ void Input() {
     cout << "文件打开失败" << endl;
     return;
   }
-     // fp = fopen(STUDENTADRESS, "ab");
+  // fp = fopen(STUDENTADRESS, "ab");
   cout << "请输入学生姓名:" << endl;
   cin >> x.Student_name;
   cout << "请输入学生学号:" << endl;
@@ -199,7 +201,7 @@ void Input() {
 void Show() {
   Student x;
   FILE *fp;
-  int filesize,count;
+  int filesize, count;
   if ((fp = fopen(STUDENTADRESS, "rb")) == NULL) {
     cout << "文件打开失败" << endl;
     return;
@@ -207,7 +209,7 @@ void Show() {
   fseek(fp, 0, SEEK_END);
   filesize = ftell(fp);
   count = filesize / sizeof(Student);
-  cout << "结构体数量" <<count << "文件大小" << filesize << endl;
+  cout << "结构体数量" << count << "文件大小" << filesize << endl;
   rewind(fp);
   for (int i = 0; i < count; i++) {
     fread(&x, sizeof(Student), 1, fp);
@@ -219,19 +221,100 @@ void Show() {
   }
   fclose(fp);
 }
+void QAQ() {
+  system("color b5");
+  Sleep(1500);
+  cout << "因为";
+  Sleep(1500);
+  cout << "程序员哥哥";
+  Sleep(1500);
+  cout << "脑抽,";
+  Sleep(1500);
+  cout << "实现此功能";
+  Sleep(1500);
+  cout << "要大规模";
+  Sleep(1500);
+  cout << "改写代码" << endl;
+  Sleep(1500);
+  cout << "所以";
+  Sleep(1500);
+  cout << "此功能永远留在下个版本实现" << endl;
+  Sleep(1500);
+  cout << "Q";
+  Sleep(1500);
+  cout << "V";
+  Sleep(1500);
+  cout << "Q";
+  Sleep(1500);
+  return;
+}
+void QVQ {
+  system("color b5");
+  cout << "提这么多需求,你将失去你的宝宝(ง •̀_•́)ง ";
+  system("cls");
+  return;
+}
 void ScoreManage(Student *p) {
-  int x = 1;
-  cout << "1.开始输入";
-  while (cin >> x) {
-    cout << "1.继续,2.显示" << endl;
-    if (x == 1) {
+  int x;
+  cout << "*************认证成功**************" << endl;
+  cout << "**********1.添加学生信息************" << endl;
+  cout << "**********2.查看学生数据************" << endl;
+  cout << "**********3.修改学生数据************" << endl;
+  cout << "**********4.退出管理系统************" << endl;
+  while (cin << x) {
+    switch (x) {
+    case 1:
       Input();
-    } else if (x == 2) {
+      break;
+    case 2:
       Show();
+      break;
+    case 3:
+      QAQ();
+      break;
+    case 4:
+      return;
+      break;
+    default:
+      cout << "请输入 1 或 2 或 3 或 4 " << endl;
     }
+    cout << "**********1.添加学生信息************" << endl;
+    cout << "**********2.查看学生数据************" << endl;
+    cout << "**********3.修改学生数据************" << endl;
+    cout << "**********4.退出管理系统************" << endl;
   }
   return;
 }
-void ScoreSearch(Student *p) { cout << "成绩查询"; }
+void ScoreSearch(Student *p) {
+  int x;
+  cout << "*************认证成功**************" << endl;
+  cout << "**********1.看看我多少分QvQ*********" << endl;
+  cout << "**********2.看看别人多少分~.~************" << endl;
+  cout << "********3.我不想知道,我要回家/(ㄒoㄒ)/~~**********" << endl;
+  cout << "****************4.****************\n我是第几名?(´・ω・`)"
+          "\n小明的学号是啥? (,,• ₃ •,,) \n" cout
+       << "我语文排第几? (○’ω’○)  \n";
+  cout << "我平均分多少? (。-`ω´-) \n我数学排多少?（´∀｀*) \n全校多少人? "
+          "(*￣∇￣*)\n";
+  cout << "我班多少人ヽ(*´Д｀*)ﾉ\n我的语文老师是谁?_(┐「ε:)_    "
+          "\n我女朋友是谁? _(:3 」∠)_ \n我明早吃啥?(*°▽°*)╯\n" cout
+       << "*********************************";
+  while (cin << x) {
+    switch (x) {
+    case 1:
+      Myscore();
+      break;
+    case 2:
+      Youscore();
+      break;
+    case 3:
+      return;
+      break;
+    case 4:
+      QVQ();
+      break;
+    }
+    return;
+  }
 
 //
