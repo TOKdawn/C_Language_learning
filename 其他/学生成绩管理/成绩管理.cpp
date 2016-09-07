@@ -11,6 +11,8 @@
 #define TEACHER 1         //老师标识符
 #define STUDENT 2         //学生标识符
 #define ADMINERROR -1     //身份验证错误
+#define FUNC_EXIT_SUCESS 0
+#define LIST_EMPTY 1;
 #define FILRADRESS "/Users/dawn/zpy/userinformation.txt" //文件路径
 #define STUDENTADRESS "/Users/dawn/zpy/studentinformation.txt"
 using namespace std;
@@ -19,7 +21,7 @@ typedef struct _Student { //学生数据
   string Student_num;     //学号
   string Student_name;    //姓名
   double score[MAXNUM];   //成绩
-  char Class[10];
+  //char Class[10];
   struct _Student *next;
 } Student;
 typedef struct _Admin {          //登录用户
@@ -38,6 +40,62 @@ int InitList(Student **list, int count, FILE *fp); //创建链表
 void Input(void);
 void Show(void);
 void QAQ(void);
+int GetElem(int num,Student *list); 
+int LocateElem(int num, Student *list); 
+int ShowList(Student *list);
+
+int LocateElem(string num,  Student *list) {
+  Student *p;
+  p = list;
+  int i = 1;
+  while (num.compare(p->Student_num)!=0&& p->next != NULL) {
+    i++;
+    p = p->next;
+  }
+  if (p->next == NULL) {
+    cout<<"没找到"<<endl;
+    return 0;
+  }
+  return i;
+}
+
+int GetElem(int num, Student *list) {
+  Student *p = list;
+  if (p == NULL) {
+    return LIST_EMPTY;
+  }
+  int i = 1;
+  while (p && i < num) {
+    p = p->next;
+    i++;
+  }
+  if (!p || i > num) //判断第num个元素是否存在
+    return 0;
+  cout<<"姓名:"<<p->Student_name<<endl;
+  cout<<"学号:"<<p->Student_num<<endl;
+  cout<<"语文:"<<p->score[CHINESE];
+  cout<<"数学:"<<p->score[MATH];
+  cout<<"英语:"<<p->score[ENGLISH];
+  return FUNC_EXIT_SUCESS;
+}
+
+
+
+int ShowList(Student *head) {
+  Student *p;
+  p = head;
+  if (head == NULL)
+    return LIST_EMPTY;
+  do {
+    cout<<"姓名:"<<p->Student_name<<endl;
+    cout<<"学号:"<<p->Student_num<<endl;
+    cout<<"语文:"<<p->score[CHINESE];
+    cout<<"数学:"<<p->score[MATH];
+    cout<<"英语:"<<p->score[ENGLISH];
+
+  } while ((p->next) != NULL && (p = p->next)); //先判断后移动链表....
+  return FUNC_EXIT_SUCESS;
+}
 int main(int argc, char *argv[]) {
   Admin visitor;
   int TYPE = -1, i;
@@ -221,34 +279,8 @@ void Show() {
   }
   fclose(fp);
 }
-void QAQ() {
-  system("color b5");
-  Sleep(1500);
-  cout << "因为";
-  Sleep(1500);
-  cout << "程序员哥哥";
-  Sleep(1500);
-  cout << "脑抽,";
-  Sleep(1500);
-  cout << "实现此功能";
-  Sleep(1500);
-  cout << "要大规模";
-  Sleep(1500);
-  cout << "改写代码" << endl;
-  Sleep(1500);
-  cout << "所以";
-  Sleep(1500);
-  cout << "此功能永远留在下个版本实现" << endl;
-  Sleep(1500);
-  cout << "Q";
-  Sleep(1500);
-  cout << "V";
-  Sleep(1500);
-  cout << "Q";
-  Sleep(1500);
-  return;
-}
-void QVQ {
+
+void QVQ (){
   system("color b5");
   cout << "提这么多需求,你将失去你的宝宝(ง •̀_•́)ง ";
   system("cls");
@@ -259,9 +291,8 @@ void ScoreManage(Student *p) {
   cout << "*************认证成功**************" << endl;
   cout << "**********1.添加学生信息************" << endl;
   cout << "**********2.查看学生数据************" << endl;
-  cout << "**********3.修改学生数据************" << endl;
-  cout << "**********4.退出管理系统************" << endl;
-  while (cin << x) {
+  cout << "**********3.退出管理系统************" << endl;
+  while (1) {
     switch (x) {
     case 1:
       Input();
@@ -270,44 +301,44 @@ void ScoreManage(Student *p) {
       Show();
       break;
     case 3:
-      QAQ();
-      break;
-    case 4:
       return;
       break;
-    default:
-      cout << "请输入 1 或 2 或 3 或 4 " << endl;
     }
     cout << "**********1.添加学生信息************" << endl;
     cout << "**********2.查看学生数据************" << endl;
-    cout << "**********3.修改学生数据************" << endl;
-    cout << "**********4.退出管理系统************" << endl;
+    cout << "**********3.退出管理系统************" << endl;
+    cin>>x;
   }
   return;
 }
 void ScoreSearch(Student *p) {
   int x;
+  string num;
   cout << "*************认证成功**************" << endl;
   cout << "**********1.看看我多少分QvQ*********" << endl;
   cout << "**********2.看看别人多少分~.~************" << endl;
-  cout << "********3.我不想知道,我要回家/(ㄒoㄒ)/~~**********" << endl;
-  cout << "****************4.****************\n我是第几名?(´・ω・`)"
-          "\n小明的学号是啥? (,,• ₃ •,,) \n" cout
-       << "我语文排第几? (○’ω’○)  \n";
-  cout << "我平均分多少? (。-`ω´-) \n我数学排多少?（´∀｀*) \n全校多少人? "
-          "(*￣∇￣*)\n";
-  cout << "我班多少人ヽ(*´Д｀*)ﾉ\n我的语文老师是谁?_(┐「ε:)_    "
-          "\n我女朋友是谁? _(:3 」∠)_ \n我明早吃啥?(*°▽°*)╯\n" cout
-       << "*********************************";
+  cout << "**********3.我要看大榜!!!****************" << endl;
+  cout << "********5.我不想知道,我要回家/(ㄒoㄒ)/~~**********" << endl;
+  cout << "****************4.****************\n我是第几名?(´・ω・`)\n小明的学号是啥? (,,• ₃ •,,) \n" ;
+  cout<< "我语文排第几? (○’ω’○)  \n";
+  cout << "我平均分多少? (。-`ω´-) \n我数学排多少?（´∀｀*) \n全校多少人? (*￣∇￣*)\n";
+  cout << "我班多少人ヽ(*´Д｀*)ﾉ\n我的语文老师是谁?_(┐「ε:)_ \n我女朋友是谁? _(:3 」∠)_ \n我明早吃啥?(*°▽°*)╯\n" ;
+  cout<< "*********************************";
   while (cin << x) {
     switch (x) {
     case 1:
-      Myscore();
+      cout<<"请输入你的学号:"<<endl;
+      cin>>num;
+       GetElem(LocateElem(num,  p), p); 
+      
       break;
     case 2:
-      Youscore();
+     ShowList(p);
       break;
     case 3:
+    //  paixu();
+      break;
+    case 5:
       return;
       break;
     case 4:
@@ -316,5 +347,5 @@ void ScoreSearch(Student *p) {
     }
     return;
   }
+}
 
-//
