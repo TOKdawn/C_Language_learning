@@ -9,8 +9,10 @@ typedef int ElemType; //设定链表所储存的数据类型
 typedef struct TheList {
   ElemType data;
   struct TheList *next;
+  struct TheList *preat;
 } str_List; //链表结构重命名为str_List
 /**********函数声明*******/
+int Double(str_List *list);
 int InitList(
     str_List **list,
     int sum /*  ElemType *input 输入获取途径,本程序为在函数里获取键盘输入,可扩展其他方式*/); //创建链表,长度为sum
@@ -33,18 +35,21 @@ int main(int argc, char const *argv[]) {
   e = &d;
   str_List **delivery;
   delivery = &list;
-  // InitList(delivery, 4);
-  // ListLength(list, e);
-  // ListDelete(3, e, list);
-  // ShowList(list);
-  // LocateElem(20, list, e);
-  // GetElem(2, e, list);
-  // printf("%d", *e);
-  // printf("\n");
-  // ListInsert(2, 100, list);
-  // GetElem(3, e, list);
-  // printf("%d查找\n", *e);
-  // ShowList(list);
+  InitList(delivery, 10);
+  ListLength(list, e);
+  ListDelete(3, e, list);
+  //ShowList(list);
+  Double(list);
+  printf("\n\n\n");
+  //ShowList(list);
+  LocateElem(20, list, e);
+  GetElem(2, e, list);
+  printf("%d", *e);
+  printf("\n");
+  ListInsert(2, 100, list);
+  GetElem(3, e, list);
+  printf("%d查找\n", *e);
+  ShowList(list);
   return 0;
 }
 int ShowList(str_List *head) {
@@ -54,6 +59,8 @@ int ShowList(str_List *head) {
     return LIST_EMPTY;
   do {
     printf("%d\n", p->data);
+    printf("next:%p\n",p->next);
+    printf("preat:%p\n",p->preat);
 
   } while ((p->next) != NULL && (p = p->next)); //先判断后移动链表....
   return FUNC_EXIT_SUCESS;
@@ -121,6 +128,7 @@ int ListInsert(int num, ElemType elem, str_List *list) {
   }
   s->data = elem;
   s->next = p->next;
+  s->preat = p;
   p->next = s;
   return FUNC_EXIT_SUCESS;
 }
@@ -186,6 +194,22 @@ int ListLength(str_List *list, int *num) {
     i++;
   } while (p->next != NULL);
   *num = i;
+  return FUNC_EXIT_SUCESS;
+}
+int Double(str_List *list){
+  if(list==NULL){
+    return LIST_EMPTY;
+  }
+  str_List *p,*head;
+  head=list;
+  while(1){
+    p=list;
+    if(list->next==NULL){
+      break;
+    }
+    list=list->next;
+    list->preat=p;
+  }
   return FUNC_EXIT_SUCESS;
 }
 
