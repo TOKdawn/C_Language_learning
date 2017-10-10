@@ -67,7 +67,7 @@ int ClearList(str_List *list); //清空链表
 int ShowList(str_List *list);  //打印链表
 int GetElem(int num, ElemType *elem,
             str_List *list); //查找链表第num个元素,值给elem
-int SearchElem(long int elem,str_List *list,int type);//在链表里查询数据,返回是第几个,type为查询条件,1名字,2qq,3电话
+int SearchElem(long int elem,str_List *list,int type);//,在链表里查询数据,返回是第几个,返回值存入elem,  type为查询条件,1名字,2qq,3电话
 int ListInsert(int num, ElemType elem,
                str_List *liet); //在链表的num位置插入数据elem
 int ListDelete(int num,
@@ -513,7 +513,7 @@ void ListToTree(PNode& root,str_List *head){//链表存成树
       }
       return ;
 }
-PNode Search(PNode root, long int key)
+PNode Search(PNode root, long int key)//二叉树查找
 {
       if(root == NULL || root->key->phone == key){
             cout<<"姓名:"<<root->key->name<<endl<<"电话:"<<root->key->phone<<endl<<"QQ:"<<root->key->qq<<endl;
